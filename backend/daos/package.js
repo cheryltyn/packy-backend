@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const packageSchema = new mongoose.Schema({
-    name: {
+    packageName: {
       type: String,
       required: true
     },
@@ -17,7 +17,7 @@ const packageSchema = new mongoose.Schema({
         type: Number,
         required: true
       },
-    type: {
+    packageType: {
       type: String,
       required: true,
       enum: ['Fitness', 'Beauty', 'Others'] // This ensures the value is one of the specified options
