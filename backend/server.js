@@ -15,6 +15,10 @@ require("dotenv").config();
 connectDB();
 var app = express();
 
+var corsOptions = {
+  origin: 'http://localhost:5173',
+};
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -23,7 +27,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use('/', packageRouter);
 // app.use('/users', usersRouter);
