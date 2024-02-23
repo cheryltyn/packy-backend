@@ -5,6 +5,7 @@ module.exports = {
     fetchOnePackage,
     fetchAll, 
     updatePackage, 
+    deleteOnePackage, 
 };
 
 function formatExpiryDate(date) {
@@ -34,6 +35,7 @@ async function fetchAll() {
             const formattedExpiryDate = formatExpiryDate(pkg.expiryDate);
             return { ...pkg.toObject(), expiryDate: formattedExpiryDate };
         });
+        console.log(allPackages)
         return formattedPackages;
     } catch (error) {
         throw error; // Forward any other errors
@@ -49,6 +51,16 @@ async function updatePackage(packageId, updateData) {
         );
 
         return updatedPackage;
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function deleteOnePackage(packageId) {
+    try {
+        const deletedPackage = await packageSchema.deleteOne({ _id: packageId })
+
+        return deletedPackage;
     } catch (error) {
         throw error;
     }
