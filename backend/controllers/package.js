@@ -6,6 +6,7 @@ module.exports = {
     fetchPackage, 
     getAllPackages,
     editPackage, 
+    deletePackage, 
 };
 
 async function createPackage(req, res) {
@@ -61,4 +62,22 @@ async function createPackage(req, res) {
         console.error('Error editing package:', error);
         return res.json({ error: 'Internal server error' });
     }
+}
+
+async function deletePackage(req, res) {
+  try {
+      const packageId = req.query.id;
+      const deletedPackage = await packageModel.deleteOnePackage(packageId);
+
+      // Check if the package was updated successfully
+      if (!deletedPackage) {
+          return res.status(404).json({ error: 'Package not found' });
+      }
+
+      // Send the updated package as response
+      return res.json(deletedPackage);
+  } catch (error) {
+      console.error('Error deleting package:', error);
+      return res.json({ error: 'Internal server error' });
+  }
 }
