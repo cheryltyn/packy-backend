@@ -2,7 +2,8 @@ const userSchema = require('../daos/user');
 
 module.exports = {
     createOneUser, 
-    findUser, 
+    findUser,
+    editUser,  
 };
 
 async function createOneUser(data) {
@@ -14,6 +15,16 @@ async function createOneUser(data) {
 async function findUser(data) {
     try {
         const user = await userSchema.findOne({ email: data.email });
+        return user; // Return the user object or null if not found
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+        throw error; // Rethrow the error to be caught by the controller
+    }
+}
+
+async function editUser(data) {
+    try {
+        const user = await userSchema.findOneAndUpdate({ email: data.email }, {... data }, {new :true});
         return user; // Return the user object or null if not found
     } catch (error) {
         console.error('Error fetching user data:', error);
