@@ -4,12 +4,13 @@ var path = require('path');
 var logger = require('morgan');
 var cors = require('cors');
 var connectDB = require("./client/mongo");
+// const passwordHashMiddleware = require('./middlewares/passwordHash');
 
 
 // var securityMiddleware = require('./middlewares/security');
 
 var packageRouter = require('./routes/package');
-// var usersRouter = require('./routes/user');
+var usersRouter = require('./routes/user');
 
 require("dotenv").config();
 connectDB();
@@ -29,8 +30,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors(corsOptions));
 
-app.use('/', packageRouter);
-// app.use('/users', usersRouter);
+// app.use(passwordHashMiddleware);
+
+
+app.use('/package', packageRouter);
+app.use('/user', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
