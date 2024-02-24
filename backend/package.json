@@ -7,8 +7,9 @@
   },
   "author": "",
   "dependencies": {
-    "npm": "^10.2.5",
     "express": "^4.18.2",
-    "morgan": "~1.9.1"
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "~1.9.1",
+    "npm": "^10.2.5"
   }
 }
