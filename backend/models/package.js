@@ -1,4 +1,5 @@
 const packageSchema = require('../daos/package');
+const userSchema = require('../daos/user');
 
 module.exports = {
     createOnePackage, 
@@ -12,11 +13,23 @@ function formatExpiryDate(date) {
     return date.toLocaleDateString();
 }
 
-async function createOnePackage(data) {
-    // const userData =  await userDao.findOne({ userName: username });
-    const newPackage = await packageSchema.create(data);
-    return newPackage;
+async function createOnePackage(data, userID) {
+    try {
+        const user = await userSchema.findById(userID);
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        const newPackage = await packageSchema.create(data);
+        user.packages.push(newPackage._id);
+        await user.save();
+        return newPackage;
+    } catch (error) {
+        console.error('Error creating package:', error);
+        throw error;
+    }
 }
+
 
 async function fetchOnePackage(packageId) {
     try {
@@ -28,19 +41,24 @@ async function fetchOnePackage(packageId) {
     }
 }
 
-async function fetchAll() {
+async function fetchAll(userId) {
     try {
-        const allPackages = await packageSchema.find();
-        const formattedPackages = allPackages.map(pkg => {
+        const user = await userSchema.findById(userId).populate('packages');
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        const packages = user.packages.map(pkg => {
             const formattedExpiryDate = formatExpiryDate(pkg.expiryDate);
             return { ...pkg.toObject(), expiryDate: formattedExpiryDate };
         });
-        console.log(allPackages)
-        return formattedPackages;
+
+        return packages;
     } catch (error) {
-        throw error; // Forward any other errors
+        throw error;
     }
 }
+
 
 async function updatePackage(packageId, updateData) {
     try {

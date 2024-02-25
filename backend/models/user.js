@@ -26,7 +26,7 @@ async function findUser(data) {
 async function editUser(data) {
     try {
         const user = await userSchema.findOneAndUpdate({ email: data.email }, {... data }, {new :true});
-        return user; // Return the user object or null if not found
+        return user; 
     } catch (error) {
         console.error('Error fetching user data:', error);
         throw error; // Rethrow the error to be caught by the controller

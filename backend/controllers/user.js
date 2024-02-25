@@ -16,9 +16,8 @@ async function createUser(req, res) {
     console.log(body)
     try {
       const userData = await userModel.createOneUser(body);
-      const token = createJWT(userData, "CHERYLISAMAZING");
-      console.log(token)
-      res.json(token);
+    //   const token = createJWT(userData, "CHERYLISAMAZING");
+    res.json({ success: true, user: userData });
     } catch (err) {
       console.log(err);
       res.status(500).json({ errMsg: err.message });
@@ -58,11 +57,11 @@ async function editUser(req, res) {
             // Handle case when user is not found
             return res.status(404).json({ message: 'User not found' });
         }
-        // const token = createJWT(updatedUserData);
+        const token = createJWT(updatedUserData);
         // console.log(token)
         // Return the updated user data in the response
-        // res.json({ token, message: 'User information updated successfully' });
-        return res.status(200).json({ message: 'Edit successful' });
+        return res.json({ token, message: 'User information updated successfully' });
+        // return res.status(200).json({ message: 'Edit successful' });
     } catch (error) {
         // Handle database or server errors
         console.error('Error editing user:', error);
