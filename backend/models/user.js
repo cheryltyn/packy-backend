@@ -4,6 +4,7 @@ module.exports = {
     createOneUser, 
     findUser,
     editUser,  
+    deleteOneUser, 
 };
 
 async function createOneUser(data) {
@@ -32,41 +33,12 @@ async function editUser(data) {
     }
 }
 
-
-// async function fetchAll() {
-//     try {
-//         const allPackages = await packageSchema.find();
-//         const formattedPackages = allPackages.map(pkg => {
-//             const formattedExpiryDate = formatExpiryDate(pkg.expiryDate);
-//             return { ...pkg.toObject(), expiryDate: formattedExpiryDate };
-//         });
-//         console.log(allPackages)
-//         return formattedPackages;
-//     } catch (error) {
-//         throw error; // Forward any other errors
-//     }
-// }
-
-// async function updatePackage(packageId, updateData) {
-//     try {
-//         const updatedPackage = await packageSchema.findOneAndUpdate(
-//             { _id: packageId }, // Filter condition
-//             updateData, // New data to update
-//             { new: true } // Return the modified document
-//         );
-
-//         return updatedPackage;
-//     } catch (error) {
-//         throw error;
-//     }
-// }
-
-// async function deleteOnePackage(packageId) {
-//     try {
-//         const deletedPackage = await packageSchema.deleteOne({ _id: packageId })
-
-//         return deletedPackage;
-//     } catch (error) {
-//         throw error;
-//     }
-// }
+async function deleteOneUser(email) {
+    try {
+        const user = await userSchema.findOneAndDelete({ email });
+        return user; // Return the user object or null if not found
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        throw error; // Rethrow the error to be caught by the controller
+    }
+}

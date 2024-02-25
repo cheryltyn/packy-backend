@@ -7,6 +7,7 @@ module.exports = {
     createUser, 
     userLogin, 
     editUser, 
+    deleteUser, 
 };
 
 async function createUser(req, res) {
@@ -66,5 +67,22 @@ async function editUser(req, res) {
         // Handle database or server errors
         console.error('Error editing user:', error);
         res.status(500).json({ error: 'Failed to edit user' });
+    }
+}
+
+
+async function deleteUser(req, res) {
+    const email = req.query.email; //might want to change this to userID eventually 
+    try {
+        const deletedUser = await userModel.deleteOneUser(email);
+        
+        if (!deletedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        
+        return res.status(200).json({ message: 'User deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        res.status(500).json({ error: 'Failed to delete user' });
     }
 }
