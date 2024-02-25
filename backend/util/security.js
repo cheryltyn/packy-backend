@@ -8,7 +8,6 @@ module.exports = {
 
 function createJWT(payload) {
   return jwt.sign(
-    // data payload
     { payload },
     process.env.SECRET,
     { expiresIn: "24h" }

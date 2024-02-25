@@ -10,11 +10,11 @@ module.exports = {
 };
 
 async function createPackage(req, res) {
-    // const userName = req.params.username;
+    const userID = req.query.userid;
     const body = req.body;
-    console.log(body)
+
     try {
-      const packageData = await packageModel.createOnePackage(body);
+      const packageData = await packageModel.createOnePackage(body, userID);
       res.json(packageData);
     } catch (err) {
       console.log(err);
@@ -36,7 +36,14 @@ async function createPackage(req, res) {
 
   async function getAllPackages(req, res) {
     try {
-      const allPackagesData = await packageModel.fetchAll();
+      const userId = req.query.userid; // Corrected variable name
+      const allPackagesData = await packageModel.fetchAll(userId);
+  
+      if (allPackagesData.length === 0) {
+        // If no packages are found, send a custom response
+        return res.status(404).json({ message: 'No packages found for the specified user' });
+      }
+  
       res.json(allPackagesData);
     } catch (err) {
       console.log(err);
