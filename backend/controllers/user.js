@@ -1,6 +1,7 @@
 const userModel = require("../models/user");
 const bcrypt = require('bcrypt');
 const { createJWT } = require('../util/security');
+const { clippingParents } = require("@popperjs/core");
 
 module.exports = {
     // getAllUsers,
@@ -8,6 +9,7 @@ module.exports = {
     userLogin, 
     editUser, 
     deleteUser, 
+    getUser, 
 };
 
 async function createUser(req, res) {
@@ -57,11 +59,11 @@ async function editUser(req, res) {
             // Handle case when user is not found
             return res.status(404).json({ message: 'User not found' });
         }
-        const token = createJWT(updatedUserData);
-        // console.log(token)
+        // const token = createJWT(updatedUserData);
+        console.log(updatedUserData)
         // Return the updated user data in the response
-        return res.json({ token, message: 'User information updated successfully' });
-        // return res.status(200).json({ message: 'Edit successful' });
+        // return res.json({ token, message: 'User information updated successfully' });
+        return updatedUserData
     } catch (error) {
         // Handle database or server errors
         console.error('Error editing user:', error);
@@ -83,5 +85,21 @@ async function deleteUser(req, res) {
     } catch (error) {
         console.error('Error deleting user:', error);
         res.status(500).json({ error: 'Failed to delete user' });
+    }
+}
+
+async function getUser(req, res) {
+    const user = req.query; 
+
+    try {
+        const fetchedUser = await userModel.findUser(user);
+        if (!fetchedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        console.log(fetchedUser)
+        return fetchedUser; 
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        res.status(500).json({ error: 'Failed to fetch user' });
     }
 }

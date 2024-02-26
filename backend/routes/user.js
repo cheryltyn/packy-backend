@@ -7,6 +7,7 @@ const passwordHashMiddleware = require('../middlewares/passwordHash');
 router.post('/signup', passwordHashMiddleware, userController.createUser);
 router.post('/login', userController.userLogin)
 router.put('/edituser', userController.editUser)
+router.get('/getuser', userController.getUser)
 router.delete('/deleteuser', userController.deleteUser)
 
 module.exports = router;
