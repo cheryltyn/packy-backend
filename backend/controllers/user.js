@@ -61,8 +61,6 @@ async function editUser(req, res) {
             return res.status(404).json({ message: 'User not found' });
         }
         // const token = createJWT(updatedUserData);
-        console.log(updatedUserData)
-        // Return the updated user data in the response
         // return res.json({ token, message: 'User information updated successfully' });
         return updatedUserData
     } catch (error) {
