@@ -15,7 +15,7 @@ async function createOneUser(data) {
 
 async function findUser(data) {
     try {
-        const user = await userSchema.findOne({ email: data.email });
+        const user = await userSchema.findOne({ $or: [{ email: data.email }, { _id: data.id }] });
         return user; // Return the user object or null if not found
     } catch (error) {
         console.error('Error fetching user data:', error);

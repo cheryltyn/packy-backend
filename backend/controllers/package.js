@@ -36,12 +36,22 @@ async function createPackage(req, res) {
 
   async function getAllPackages(req, res) {
     try {
-      const userId = req.query.userid; // Corrected variable name
-      const allPackagesData = await packageModel.fetchAll(userId);
+      const userId = req.query.userid;
+      const packagefilter = req.query.filter;
+      let allPackagesData = await packageModel.fetchAll(userId);
   
       if (allPackagesData.length === 0) {
         // If no packages are found, send a custom response
         return res.status(404).json({ message: 'No packages found for the specified user' });
+      }
+  
+      // Filter allPackagesData based on packagefilter
+      if (packagefilter === 'Beauty') {
+        allPackagesData = allPackagesData.filter(package => package.packageType === 'Beauty');
+      } else if (packagefilter === 'Fitness') {
+        allPackagesData = allPackagesData.filter(package => package.packageType === 'Fitness');
+      } else if (packagefilter !== 'All') {
+        return res.status(400).json({ message: 'Invalid package filter' });
       }
   
       res.json(allPackagesData);
