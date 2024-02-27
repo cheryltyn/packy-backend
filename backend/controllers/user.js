@@ -15,10 +15,10 @@ module.exports = {
 async function createUser(req, res) {
     // const userName = req.params.username;
     const body = req.body;
-    console.log(body)
+
     try {
       const userData = await userModel.createOneUser(body);
-    //   const token = createJWT(userData, "CHERYLISAMAZING");
+      const token = createJWT(userData, "CHERYLISAMAZING");
     res.json({ success: true, user: userData });
     } catch (err) {
       console.log(err);
@@ -51,6 +51,7 @@ async function userLogin(req, res) {
 
 async function editUser(req, res) {
     const userData = req.body;
+    console.log(userData)
     try {
         // Edit the user using userModel.editUser
         const updatedUserData = await userModel.editUser(userData);
