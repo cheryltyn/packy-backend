@@ -17,7 +17,7 @@ connectDB();
 var app = express();
 
 var corsOptions = {
-  origin: 'https://packy-frontend.onrender.com/', 
+  origin: 'https://packy-frontend.onrender.com', 
 };
 
 // view engine setup
