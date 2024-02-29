@@ -4,7 +4,7 @@ var path = require('path');
 var logger = require('morgan');
 var cors = require('cors');
 var connectDB = require("./client/mongo");
-const passwordHashMiddleware = require('./middlewares/passwordHash');
+// const passwordHashMiddleware = require('./middlewares/passwordHash');
 
 
 // var securityMiddleware = require('./middlewares/security');
@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors(corsOptions));
 
-app.use(passwordHashMiddleware);
+// app.use(passwordHashMiddleware);
 
 
 app.use('/package', packageRouter);

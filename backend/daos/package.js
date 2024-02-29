@@ -20,7 +20,7 @@ const packageSchema = new mongoose.Schema({
     packageType: {
       type: String,
       required: true,
-      enum: ['Fitness', 'Beauty', 'Others'] // This ensures the value is one of the specified options
+      enum: ['Fitness', 'Beauty', 'Wellness', 'Others'] // This ensures the value is one of the specified options
     }
   });
   

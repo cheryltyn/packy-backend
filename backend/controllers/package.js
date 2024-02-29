@@ -50,7 +50,9 @@ async function createPackage(req, res) {
         allPackagesData = allPackagesData.filter(package => package.packageType === 'Beauty');
       } else if (packagefilter === 'Fitness') {
         allPackagesData = allPackagesData.filter(package => package.packageType === 'Fitness');
-      } else if (packagefilter !== 'All') {
+      } else if (packagefilter === 'Wellness') {
+        allPackagesData = allPackagesData.filter(package => package.packageType === 'Wellness');
+      }  else if (packagefilter !== 'All') {
         return res.status(400).json({ message: 'Invalid package filter' });
       }
   
